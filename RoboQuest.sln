@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboQuest", "RoboQuest.csproj", "{B0524E01-8A0E-8403-8FBD-32FEC3EF2767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboQuest.Editor", "RoboQuest.Editor.csproj", "{3F7CFCDF-3614-07F7-05CF-C8C55AC74175}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0524E01-8A0E-8403-8FBD-32FEC3EF2767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0524E01-8A0E-8403-8FBD-32FEC3EF2767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0524E01-8A0E-8403-8FBD-32FEC3EF2767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0524E01-8A0E-8403-8FBD-32FEC3EF2767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F7CFCDF-3614-07F7-05CF-C8C55AC74175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F7CFCDF-3614-07F7-05CF-C8C55AC74175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F7CFCDF-3614-07F7-05CF-C8C55AC74175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F7CFCDF-3614-07F7-05CF-C8C55AC74175}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
