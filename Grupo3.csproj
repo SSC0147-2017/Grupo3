@@ -221,13 +221,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BattleScripts\BattleController.cs" />
     <Compile Include="Assets\Scripts\BattleScripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\BattleScripts\RoboBeta.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PowerUp.cs" />
     <Compile Include="Assets\Scripts\PowerUpPanel.cs" />
     <Compile Include="Assets\Scripts\PowerUpSlot.cs" />
-    <Compile Include="Assets\Scripts\RoboBeta.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GPUInstancing.cs" />

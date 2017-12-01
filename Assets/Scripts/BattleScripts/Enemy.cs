@@ -5,22 +5,46 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
 
-    public Text HPText;
-    public int maxHP = 10;
-    public int curHP = 10;
+    public Text vidaText;
+
+    public int vida;
+    public int inteligencia;
+    public int velocidade;
+    public int ataque;
+    public int defesa;
+
+    private int curVida;
+    private int curInteligencia;
+    private int curVelocidade;
+    private int curAtaque;
+    private int curDefesa;
+
+    private void Awake()
+    {
+        curVida = vida;
+        curInteligencia = inteligencia;
+        curVelocidade = velocidade;
+        curAtaque = ataque;
+        curDefesa = defesa;
+    }
 
     public void TakeDamage(int damage)
     {
-        curHP -= damage;
-        if (curHP <= 0)
+        curVida -= damage;
+        if (curVida <= 0)
         {
-            HPText.text = " " + 0;
+            vidaText.text = " " + 0;
             //TODO kill enemy
         }
         else
         {
-            HPText.text = " " + curHP;
+            vidaText.text = " " + curVida;
         }
 
+    }
+
+    public bool isDead()
+    {
+        return (curVida <= 0);
     }
 }

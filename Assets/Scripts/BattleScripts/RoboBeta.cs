@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Robo : MonoBehaviour {
+public class RoboBeta : MonoBehaviour {
+
+    public Text vidaText;
+
     public int vida;
     public int inteligencia;
     public int velocidade;
@@ -24,13 +28,23 @@ public class Robo : MonoBehaviour {
         curDefesa = defesa;
     }
 
-    // Use this for initialization
-    void Start () {
-        Debug.Log(curVida);
-	}
+    public void TakeDamage(int damage)
+    {
+        curVida -= damage;
+        if (curVida <= 0)
+        {
+            vidaText.text = " " + 0;
+            //TODO kill beta
+        }
+        else
+        {
+            vidaText.text = " " + curVida;
+        }
 
-	// Update is called once per frame
-	void Update () {
+    }
 
-	}
+    public bool isDead()
+    {
+        return (curVida <= 0);
+    }
 }
