@@ -15,9 +15,29 @@ public class CameraController : MonoBehaviour {
 	public float delayX, delayY;
 
 	bool bounds;
+    private bool controle = false;
 
-	// Use this for initialization
-	void Start () {
+    void pausa()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (controle == false)
+            {
+                Time.timeScale = 0;
+                controle = true;
+            }
+
+            else
+            {
+                Time.timeScale = 1;
+                controle = false;
+            }
+        }
+    }
+
+
+    // Use this for initialization
+    void Start () {
 		//offset = transform.position - followTarget.transform.position;
 	}
 	
@@ -47,7 +67,9 @@ public class CameraController : MonoBehaviour {
 			Mathf.Clamp(transform.position.y, minCameraPos.y, maxCameraPos.y),
 			transform.position.z
 		);
-	}
+
+        pausa();
+    }
 
 	void LateUpdate () {
 		//transform.position = followTarget.transform.position + offset;
