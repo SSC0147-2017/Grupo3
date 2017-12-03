@@ -96,7 +96,7 @@ public class BattleController : MonoBehaviour {
             case TURNOS.LOSE:
                 battleEvents.text = "beta foi derrotado!";
                 //yield WaitForSeconds (2);
-                SceneManagement.LoadScene("Icmc");
+                SceneManager.LoadScene("Icmc");
             break;
 
         }
