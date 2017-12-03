@@ -3,11 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PowerUpEffect = System.Collections.Generic.KeyValuePair<PowerUpType, int>;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour {
+public class Player : Robo {
 	List<PowerUp> powerUps;
 
-	void Start () {
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+        InicializaStatus();
+    }
+
+
+    void Start () {
 		powerUps = new List<PowerUp>();
 		
         // DEBUG -------------->
@@ -36,6 +44,7 @@ public class Player : MonoBehaviour {
         powerUps.Add(newPowerUp);
         // --------------> DEBUG
     }
+
 
     /* Retorna a quantidade de power ups que o player tem */
     public int PowerUpCount {
