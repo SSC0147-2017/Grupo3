@@ -10,7 +10,6 @@ public class Player : Robo {
 
     private void Awake()
     {
-		// Debug.Log("instanciou beta");
 		InicializaStatus(10, 10, 10, 10);
         DontDestroyOnLoad(this.gameObject);
     }

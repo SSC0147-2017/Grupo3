@@ -16,7 +16,7 @@ public class Robo : MonoBehaviour {
     private int curDefesa;
     private int curVelocidade;
 
-    public void InicializaStatus(int vid=10, int vel=10, int atk=10, int def=10)
+    public void InicializaStatus (int vid=10, int vel=10, int atk=10, int def=10)
     {
         vida = vid;
         velocidade = vel;
@@ -29,65 +29,73 @@ public class Robo : MonoBehaviour {
         curVelocidade = velocidade;
     }
     // Apos a batalha todos os valores de atributos do beta voltam para seu valor original
-    public void RecarregaAtributos() {
+    public void RecarregaAtributos () {
         curVida = vida;
         curAtaque = ataque;
         curDefesa = defesa;
         curVelocidade = velocidade;
     }
 
-    public int TakeDamage(int damage)
+    public bool TakeDamage (int damage)
     {
-        // Debug.Log("Entrou TakeDamage");
-        Random.InitState(546);
-        if( Random.Range(0, 60) >= velocidade)
+        Random.InitState((int)Time.time);
+        if( Random.Range(0, 50) >= velocidade)
         {
             //ACERTOU!
             if (damage > curDefesa)
             {
                 curVida -= (damage - curDefesa);
-                // Debug.Log("deu dano = "+ (damage - curDefesa));
-                return damage - curDefesa;
+                return true;
             }
+            
         }
-        return 0;
+        return false;
     }
 
-    public int ReduceVelocity(int reducao)
+    public void ReduceVelocity (int reducao)
     {
         curVelocidade -= reducao;
         if (curVelocidade < 3)
         {
             curVelocidade = 3;
         }
-        return curVelocidade;
     }
 
-    public int GetAtaque()
+    public void AumentarDefesa (int aumento)
+    {
+        curDefesa += aumento;
+        if (curDefesa > defesa + 3)
+        {
+            curDefesa = defesa + 3;
+        }
+    }
+
+    public int GetAtaque ()
     {
         return curAtaque;
     }
 
-    public bool IsDead()
+    public bool IsDead ()
     {
         return (curVida <= 0);
     }
 
-    public int GetCurVida()
+    public int GetCurVida ()
     {
         return curVida;
     }
 
-    public int GetMaxVida()
+    public int GetMaxVida ()
     {
         return vida;
     }
 
-    public int GetMaxVelocidade() {
+    public int GetMaxVelocidade ()
+    {
         return velocidade;
     }
 
-    public int GetCurVelocidade()
+    public int GetCurVelocidade ()
     {
         return curVelocidade;
     }

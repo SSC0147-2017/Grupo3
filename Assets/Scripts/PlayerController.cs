@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Utilities
+{
 
 	public float moveSpeed;
 	private float speedMultiplier;
@@ -13,6 +14,16 @@ public class PlayerController : MonoBehaviour {
     private bool pausado = false;
     private bool controle = false;
     public float altura;
+
+    public GameObject screen;
+
+    void Start()
+    {
+        StartCoroutine(FadeOut(screen));
+        animator = GetComponent<Animator>();
+        body = GetComponent<Rigidbody2D>();
+        BGM = GetComponentInChildren<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -47,12 +58,12 @@ public class PlayerController : MonoBehaviour {
                 transform.position.x < 23 &&
                 transform.position.y > -49.4 &&
                 transform.position.y < -39)
-                SceneManager.LoadScene("Customization");
+                StartCoroutine(FadeIn(screen, "Customization"));
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SceneManager.LoadScene("BattleScene");
+            StartCoroutine(FadeIn(screen, "BattleScene"));
         }
 
     }
@@ -90,12 +101,7 @@ public class PlayerController : MonoBehaviour {
 
     private float verMove, horMove;
 
-	// Use this for initialization
-	void Start () {
-		animator = GetComponent<Animator>();
-		body = GetComponent<Rigidbody2D>();
-        BGM = GetComponentInChildren<AudioSource>();
-    }
+
 
     void OnTriggerStay2D(Collider2D other)
     {

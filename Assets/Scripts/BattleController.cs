@@ -4,21 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class BattleController : MonoBehaviour {
+public class BattleController : Utilities
+{
 
     public GameObject enemyGO;
     private GameObject betaGO;
-    private Enemy enemy;
-    private Player beta;
+    public GameObject screen;
+
     public Text betaVidaText;
     public Text enemyVidaText;
     public Text battleEvents;
-    // private bool buttonPressed = false;
-
 
     public Button ataqueBasicoButton;
     public Button ataqueSecundarioButton;
+    public Button ataqueTerciarioButton;
 
+    private Enemy enemy;
+    private Player beta;
+
+    private bool acertou;
 
     enum TURNOS
     {
@@ -33,6 +37,7 @@ public class BattleController : MonoBehaviour {
 
     private void Awake()
     {
+        StartCoroutine(FadeOut(screen));
         enemy = enemyGO.GetComponent<Enemy>();
         betaGO = GameObject.Find("Beta");
         beta = betaGO.GetComponent<Player>();
@@ -40,15 +45,16 @@ public class BattleController : MonoBehaviour {
         betaVidaText.text = " " + beta.GetCurVida();
         battleEvents.text = "";
         turnoAtual = TURNOS.START;
-        Random.InitState(43);
+        Random.InitState((int)Time.time);
     }
 
     private void Update()
-    {
+    {       
         Debug.Log(turnoAtual);
         switch (turnoAtual)
         {
             case TURNOS.START:
+                beta.RecarregaAtributos();
                 if (beta.GetCurVelocidade() + Random.Range(0,5) >= enemy.GetCurVelocidade() + Random.Range(0,5)) {
                     turnoAtual = TURNOS.PLAYER_TURN;
                     battleEvents.text = "O Beta ataca primeiro!";
@@ -63,9 +69,11 @@ public class BattleController : MonoBehaviour {
                 {
                     ataqueBasicoButton.onClick.AddListener(AtaqueBasicoOnButtonClick);
                     ataqueSecundarioButton.onClick.AddListener(AtaqueSecundarioOnButtonClick);
+                    ataqueTerciarioButton.onClick.AddListener(AtaqueTerciarioOnButtonClick);
                 }
             break;
             case TURNOS.ENEMY_TURN:
+                battleEvents.text = "O inimigo atacou!";
                 beta.TakeDamage(Random.Range(0, 5) + enemy.GetAtaque());
 
                 turnoAtual = TURNOS.PLAYER_TURN;
@@ -81,30 +89,27 @@ public class BattleController : MonoBehaviour {
             break;
             case TURNOS.WIN:
                 battleEvents.text = "Beta venceu! Pressione qualquer tecla para continuar...";
-                beta.RecarregaAtributos();
                 if (Input.anyKey)
                 {
-                    SceneManager.LoadScene("Icmc");
+                    StartCoroutine(FadeIn(screen, "Icmc"));
                 }
             break;
             case TURNOS.LOSE:
                 battleEvents.text = "Beta foi derrotado! Pressione qualquer tecla para continuar...";
-                beta.RecarregaAtributos();
                 if (Input.anyKey)
                 {
-                    SceneManager.LoadScene("Icmc");
+                    StartCoroutine(FadeIn(screen, "Icmc"));
                 }
             break;
 
         }
     }
 
-    void AtaqueBasicoOnButtonClick()
+    private void AtaqueBasicoOnButtonClick ()
     {
-        // Debug.Log("clicou em ataque basico");
-        int dano = enemy.TakeDamage(Random.Range(0,5) + beta.GetAtaque());
-        // Debug.Log("dano infligido = "+dano);
         battleEvents.text = "Beta usou ataque basico!";
+        acertou = enemy.TakeDamage(Random.Range(0,5) + beta.GetAtaque());
+        ChecaAcerto(acertou);
         turnoAtual = TURNOS.ENEMY_TURN;
         if (enemy.IsDead())
         {
@@ -115,13 +120,30 @@ public class BattleController : MonoBehaviour {
         {
             enemyVidaText.text = enemy.GetCurVida()+" / "+enemy.GetMaxVida();
         }
-        // Debug.Log("saiu do ataque basico");
     }
 
-    void AtaqueSecundarioOnButtonClick()
+    private void AtaqueSecundarioOnButtonClick ()
     {
         turnoAtual = TURNOS.ENEMY_TURN;
         enemy.ReduceVelocity(1);
         battleEvents.text = "A velocidade do inimigo foi reduzida!";
+    }
+
+    private void AtaqueTerciarioOnButtonClick ()
+    {
+        battleEvents.text = "Beta aumentou a propria defesa!";
+        beta.AumentarDefesa(1);
+    }
+
+    private void ChecaAcerto (bool hit)
+    {
+        if (hit)
+        {
+            battleEvents.text = "Beta acertou!";
+        }
+        else
+        {
+            battleEvents.text = "Beta errou!";
+        }
     }
 }

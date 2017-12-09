@@ -230,6 +230,7 @@
     <Compile Include="Assets\Scripts\PowerUpPanel.cs" />
     <Compile Include="Assets\Scripts\PowerUpSlot.cs" />
     <Compile Include="Assets\Scripts\Robo.cs" />
+    <Compile Include="Assets\Scripts\Utilities.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GPUInstancing.cs" />
