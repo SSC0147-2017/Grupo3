@@ -9,6 +9,7 @@ public class Enemy : Robo {
 
     private void Awake()
     {
+        // Debug.Log("instanciou inimigo");
         InicializaStatus(15);
     }
 }

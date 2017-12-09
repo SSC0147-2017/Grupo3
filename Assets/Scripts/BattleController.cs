@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class BattleController : MonoBehaviour {
 
-    //public Button basicAttackButton;
     public GameObject enemyGO;
-    public GameObject betaGO;
+    private GameObject betaGO;
     private Enemy enemy;
     private Player beta;
-    public Button button;
-    private bool buttonPressed = false;
     public Text betaVidaText;
     public Text enemyVidaText;
     public Text battleEvents;
+    // private bool buttonPressed = false;
+
+
+    public Button ataqueBasicoButton;
+    public Button ataqueSecundarioButton;
+
 
     enum TURNOS
     {
@@ -31,16 +34,14 @@ public class BattleController : MonoBehaviour {
     private void Awake()
     {
         enemy = enemyGO.GetComponent<Enemy>();
-
+        betaGO = GameObject.Find("Beta");
         beta = betaGO.GetComponent<Player>();
-        enemyVidaText.text = " " + enemy.getCurVida();
-        betaVidaText.text = " " + beta.getCurVida();
+        enemyVidaText.text = " " + enemy.GetCurVida();
+        betaVidaText.text = " " + beta.GetCurVida();
         battleEvents.text = "";
         turnoAtual = TURNOS.START;
         Random.InitState(43);
     }
-
-
 
     private void Update()
     {
@@ -48,7 +49,7 @@ public class BattleController : MonoBehaviour {
         switch (turnoAtual)
         {
             case TURNOS.START:
-                if (beta.getVelocidade() + Random.Range(0,5) >= enemy.getVelocidade() + Random.Range(0,5)) {
+                if (beta.GetCurVelocidade() + Random.Range(0,5) >= enemy.GetCurVelocidade() + Random.Range(0,5)) {
                     turnoAtual = TURNOS.PLAYER_TURN;
                     battleEvents.text = "O Beta ataca primeiro!";
                 } else {
@@ -58,52 +59,69 @@ public class BattleController : MonoBehaviour {
 
             break;
             case TURNOS.PLAYER_TURN:
-                button.onClick.AddListener(onButtonClick);
-                if (buttonPressed == true)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    buttonPressed = false;
-                    enemy.TakeDamage(Random.Range(0,5) + beta.getAtaque());
-
-                    turnoAtual = TURNOS.ENEMY_TURN;
-                    if (enemy.isDead())
-                    {
-                        turnoAtual = TURNOS.WIN;
-                        enemyVidaText.text = "0 / "+enemy.getMaxVida();
-                    }
-                    else
-                    {
-                        enemyVidaText.text = enemy.getCurVida()+" / "+enemy.getMaxVida();
-                    }
+                    ataqueBasicoButton.onClick.AddListener(AtaqueBasicoOnButtonClick);
+                    ataqueSecundarioButton.onClick.AddListener(AtaqueSecundarioOnButtonClick);
                 }
             break;
             case TURNOS.ENEMY_TURN:
-                beta.TakeDamage(Random.Range(0, 5) + enemy.getAtaque());
+                beta.TakeDamage(Random.Range(0, 5) + enemy.GetAtaque());
 
                 turnoAtual = TURNOS.PLAYER_TURN;
-                if (beta.isDead())
+                if (beta.IsDead())
                 {
                     turnoAtual = TURNOS.LOSE;
-                    betaVidaText.text = "0 / "+beta.getMaxVida();
+                    betaVidaText.text = "0 / "+beta.GetMaxVida();
                 }
                 else
                 {
-                    betaVidaText.text = beta.getCurVida()+" / "+beta.getMaxVida();
+                    betaVidaText.text = beta.GetCurVida()+" / "+beta.GetMaxVida();
                 }
             break;
             case TURNOS.WIN:
-
+                battleEvents.text = "Beta venceu! Pressione qualquer tecla para continuar...";
+                beta.RecarregaAtributos();
+                if (Input.anyKey)
+                {
+                    SceneManager.LoadScene("Icmc");
+                }
             break;
             case TURNOS.LOSE:
-                battleEvents.text = "beta foi derrotado!";
-                //yield WaitForSeconds (2);
-                SceneManager.LoadScene("Icmc");
+                battleEvents.text = "Beta foi derrotado! Pressione qualquer tecla para continuar...";
+                beta.RecarregaAtributos();
+                if (Input.anyKey)
+                {
+                    SceneManager.LoadScene("Icmc");
+                }
             break;
 
         }
     }
 
-    void onButtonClick()
+    void AtaqueBasicoOnButtonClick()
     {
-        buttonPressed = true;
+        // Debug.Log("clicou em ataque basico");
+        int dano = enemy.TakeDamage(Random.Range(0,5) + beta.GetAtaque());
+        // Debug.Log("dano infligido = "+dano);
+        battleEvents.text = "Beta usou ataque basico!";
+        turnoAtual = TURNOS.ENEMY_TURN;
+        if (enemy.IsDead())
+        {
+            turnoAtual = TURNOS.WIN;
+            enemyVidaText.text = "0 / "+enemy.GetMaxVida();
+        }
+        else
+        {
+            enemyVidaText.text = enemy.GetCurVida()+" / "+enemy.GetMaxVida();
+        }
+        // Debug.Log("saiu do ataque basico");
+    }
+
+    void AtaqueSecundarioOnButtonClick()
+    {
+        turnoAtual = TURNOS.ENEMY_TURN;
+        enemy.ReduceVelocity(1);
+        battleEvents.text = "A velocidade do inimigo foi reduzida!";
     }
 }

@@ -10,14 +10,15 @@ public class Player : Robo {
 
     private void Awake()
     {
+		// Debug.Log("instanciou beta");
+		InicializaStatus(10, 10, 10, 10);
         DontDestroyOnLoad(this.gameObject);
-        InicializaStatus();
     }
 
 
     void Start () {
 		powerUps = new List<PowerUp>();
-		
+
         // DEBUG -------------->
         // Powerup bateria de lítio
 		PowerUpEffect effect = new PowerUpEffect(PowerUpType.Vida, 3);
