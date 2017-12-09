@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BattleController.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Dialogo.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Pause.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TmxObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Mensagens\msg.txt" />
     <None Include="Assets\Tiled2Unity\Imported\_ReadMe.txt" />
     <None Include="Assets\Tiled2Unity\Imported\icmc.tiled2unity.xml" />
     <None Include="Assets\Tiled2Unity\License.txt" />
