@@ -73,12 +73,10 @@ public class BattleController : Utilities
             case TURNOS.PLAYER_TURN:
                 if (pressedButton)
                 {
-                    //Debug.Log("atacou!");
+                    
                     ataqueBasicoButton.onClick.AddListener(AtaqueBasicoOnButtonClick);
                     ataqueSecundarioButton.onClick.AddListener(AtaqueSecundarioOnButtonClick);
                     ataqueTerciarioButton.onClick.AddListener(AtaqueTerciarioOnButtonClick);
-                    pressedButton = false;
-                    turnoAtual = TURNOS.ENEMY_TURN;
                 }
             break;
             case TURNOS.ENEMY_TURN:
@@ -119,6 +117,7 @@ public class BattleController : Utilities
         battleEvents.text = "Beta usou ataque basico!";
         acertou = enemy.TakeDamage(Random.Range(0,5) + beta.GetAtaque());
         ChecaAcerto(acertou);
+        turnoAtual = TURNOS.ENEMY_TURN;
         if (enemy.IsDead())
         {
             turnoAtual = TURNOS.WIN;
@@ -132,14 +131,15 @@ public class BattleController : Utilities
 
     private void AtaqueSecundarioOnButtonClick ()
     {
+        turnoAtual = TURNOS.ENEMY_TURN;
         enemy.ReduceVelocity(1);
         battleEvents.text = "A velocidade do inimigo foi reduzida!";
     }
 
     private void AtaqueTerciarioOnButtonClick ()
     {
-        beta.AumentarDefesa(1);
         battleEvents.text = "Beta aumentou a propria defesa!";
+        beta.AumentarDefesa(1);
     }
 
     private void ChecaAcerto (bool hit)
@@ -152,10 +152,5 @@ public class BattleController : Utilities
         {
             battleEvents.text = "Beta errou!";
         }
-    }
-
-    public void PressButton()
-    {
-        pressedButton = true;
     }
 }
