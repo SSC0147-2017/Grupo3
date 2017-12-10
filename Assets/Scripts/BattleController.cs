@@ -7,24 +7,28 @@ using UnityEngine.SceneManagement;
 public class BattleController : Utilities
 {
 
-    public GameObject enemyGO;
-    private GameObject betaGO;
-    public GameObject screen;
+    public GameObject enemyGO; //   GameObject do inimigo do jogador
+    private GameObject betaGO;  //  GameObject do robo do jogador, o Beta
+    public GameObject screen; //    Imagem preta que cobre a tela, por padrao ela esta com alpha 0,
+                              //    mas ao se realizar fadein/fadeout o valor do alpha é gradativamente trocado
 
-    public Text betaVidaText;
-    public Text enemyVidaText;
-    public Text battleEvents;
+    public Text betaVidaText;   //Texto na cena com a vida atual do beta
+    public Text enemyVidaText;  //Texto na cena com a vida do inimigo
+    public Text battleEvents;   //Texto que descreve as açoes realizadas durante o combate
 
-    public Button ataqueBasicoButton;
-    public Button ataqueSecundarioButton;
-    public Button ataqueTerciarioButton;
+    public Button ataqueBasicoButton;   //Botao do primeiro ataque do beta
+    public Button ataqueSecundarioButton;   //Botao do segundo ataque do beta
+    public Button ataqueTerciarioButton;    //Botao do terceiro ataque do beta
 
-    private Enemy enemy;
-    private Player beta;
+    private Enemy enemy;    //Instancia do inimigo
+    private Player beta;    //Instancia do beta
 
-    private bool acertou;
+    private bool acertou;   //Esta variavel vai armazenar se o Beta acertou, ou não, o golpe.
+                            //  Serve para decidir qual texto apresentar no "battleEvents".
 
-    enum TURNOS
+    private bool pressedButton; //  Indica se o jogador apertou alguma das opcoes de ataque
+
+    enum TURNOS //Possiveis estados da maquina de estados que controla as etapas do combate
     {
         START,
         PLAYER_TURN,
@@ -37,15 +41,16 @@ public class BattleController : Utilities
 
     private void Awake()
     {
-        StartCoroutine(FadeOut(screen));
+        StartCoroutine(FadeOut(screen));//  Realiza o Fade ao entrar na cena de combate
         enemy = enemyGO.GetComponent<Enemy>();
         betaGO = GameObject.Find("Beta");
         beta = betaGO.GetComponent<Player>();
-        enemyVidaText.text = " " + enemy.GetCurVida();
+        enemyVidaText.text = " " + enemy.GetCurVida(); //   Inicializa textos da cena que mostram a vida atual tanto do beta quanto do inimigo
         betaVidaText.text = " " + beta.GetCurVida();
         battleEvents.text = "";
+        pressedButton = false;
+        Random.InitState((int)Time.time);   //gera semente para valores randomicos
         turnoAtual = TURNOS.START;
-        Random.InitState((int)Time.time);
     }
 
     private void Update()
@@ -54,7 +59,8 @@ public class BattleController : Utilities
         switch (turnoAtual)
         {
             case TURNOS.START:
-                beta.RecarregaAtributos();
+                beta.RecarregaAtributos(); //Recarrega todos os atributos (cur..) para seu valor maximo, por exemplo, curVida = maxVida.
+                //   Decide se o inimigo ou o beta vai comecar a batalha
                 if (beta.GetCurVelocidade() + Random.Range(0,5) >= enemy.GetCurVelocidade() + Random.Range(0,5)) {
                     turnoAtual = TURNOS.PLAYER_TURN;
                     battleEvents.text = "O Beta ataca primeiro!";
@@ -65,8 +71,9 @@ public class BattleController : Utilities
 
             break;
             case TURNOS.PLAYER_TURN:
-                if (Input.GetMouseButtonDown(0))
+                if (pressedButton)
                 {
+                    
                     ataqueBasicoButton.onClick.AddListener(AtaqueBasicoOnButtonClick);
                     ataqueSecundarioButton.onClick.AddListener(AtaqueSecundarioOnButtonClick);
                     ataqueTerciarioButton.onClick.AddListener(AtaqueTerciarioOnButtonClick);
