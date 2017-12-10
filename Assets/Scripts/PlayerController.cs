@@ -99,12 +99,8 @@ public class PlayerController : MonoBehaviour {
                 transform.position.x < 23 &&
                 transform.position.y > -49.4 &&
                 transform.position.y < -39)
-            {
-                SceneManager.LoadScene("Customization");
-                DontDestroyOnLoad(this.gameObject);
-            }
+            SceneManager.LoadScene("Customization");
         }
-        
     }
 
     void OnTriggerStay2D(Collider2D other)
