@@ -45,8 +45,8 @@ public class BattleController : Utilities
         enemy = enemyGO.GetComponent<Enemy>();
         betaGO = GameObject.Find("Beta");
         beta = betaGO.GetComponent<Player>();
-        enemyVidaText.text = " " + enemy.GetCurVida(); //   Inicializa textos da cena que mostram a vida atual tanto do beta quanto do inimigo
-        betaVidaText.text = " " + beta.GetCurVida();
+        enemyVidaText.text = enemy.GetMaxVida() + " / " + enemy.GetMaxVida(); //   Inicializa textos da cena que mostram a vida atual tanto do beta quanto do inimigo
+        betaVidaText.text = beta.GetMaxVida() + " / " + beta.GetMaxVida();
         battleEvents.text = "";
         pressedButton = false;
         Random.InitState((int)Time.time);   //gera semente para valores randomicos
@@ -73,12 +73,20 @@ public class BattleController : Utilities
             case TURNOS.PLAYER_TURN:
                 if (pressedButton)
                 {
-                    //Debug.Log("atacou!");
                     ataqueBasicoButton.onClick.AddListener(AtaqueBasicoOnButtonClick);
                     ataqueSecundarioButton.onClick.AddListener(AtaqueSecundarioOnButtonClick);
                     ataqueTerciarioButton.onClick.AddListener(AtaqueTerciarioOnButtonClick);
                     pressedButton = false;
                     turnoAtual = TURNOS.ENEMY_TURN;
+                    if (enemy.IsDead())
+                    {
+                        turnoAtual = TURNOS.WIN;
+                        enemyVidaText.text = "0 / " + enemy.GetMaxVida();
+                    }
+                    else
+                    {
+                        enemyVidaText.text = enemy.GetCurVida() + " / " + enemy.GetMaxVida();
+                    }
                 }
             break;
             case TURNOS.ENEMY_TURN:
@@ -119,15 +127,6 @@ public class BattleController : Utilities
         battleEvents.text = "Beta usou ataque basico!";
         acertou = enemy.TakeDamage(Random.Range(0,5) + beta.GetAtaque());
         ChecaAcerto(acertou);
-        if (enemy.IsDead())
-        {
-            turnoAtual = TURNOS.WIN;
-            enemyVidaText.text = "0 / "+enemy.GetMaxVida();
-        }
-        else
-        {
-            enemyVidaText.text = enemy.GetCurVida()+" / "+enemy.GetMaxVida();
-        }
     }
 
     private void AtaqueSecundarioOnButtonClick ()
@@ -158,4 +157,6 @@ public class BattleController : Utilities
     {
         pressedButton = true;
     }
+
+
 }

@@ -11,7 +11,12 @@ public class Player : Robo {
     private void Awake()
     {
 		InicializaStatus(10, 10, 10, 10);
-        DontDestroyOnLoad(this.gameObject);
+
+        DontDestroyOnLoad(this);
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 
