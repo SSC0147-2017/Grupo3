@@ -8,7 +8,7 @@ public class Utilities : MonoBehaviour {
     //NOTA: É importante notar que as funções FadeIn e FadeOut dizem respeito ao objeto que é
     //  sobreposto a cena. Por isso se chama FadeIn ao trocar de cena, e FadeOut na nova cena carregada
 
-    public IEnumerator FadeOut(GameObject screen, float fadeDelay=0.8f, float alphaMax=1.0f)
+    public IEnumerator FadeOut(GameObject screen, float fadeDelay=0.4f, float alphaMax=1.0f)
     {
         // Função que realiza o FadeOut do objeto sobre a cena
         if (alphaMax > 1) alphaMax = 1;
