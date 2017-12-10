@@ -3,53 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Dialogo : MonoBehaviour {
+public class Dialogo : MonoBehaviour
+{
     public GameObject panelBox;
     public TextAsset arquivo;
-    public string[] texto;
+    public string texto;
     public Text textoMensagem;
     private int EndLine;
     private int CurrentLine;
-    public bool ativo;
+    public bool ativo = false;
 
-	// Use this for initialization
-	void Start () {
-	    if(arquivo != null)
-        {
-            texto = (arquivo.text.Split('\n'));
-        }
-        
-        if (EndLine == 0)
-        {
-            EndLine = texto.Length;
-        }
+    // Use this for initialization
+    void Start()
+    {
 
         desabilitar();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        habilitar();
+    }
 
-		if(Input.GetKeyDown("z"))
+    // Update is called once per frame
+    void Update()
+    {
+        //desabilitar();
+        if (Input.GetKeyDown("x"))
         {
-            if(CurrentLine < EndLine)
-            {
-                textoMensagem.text = texto[CurrentLine];
-            }
-
-            if(panelBox.activeSelf)
-            {
-                CurrentLine += 1;
-            }
-        }
-
-        if (CurrentLine > EndLine)
-        {
-            CurrentLine = 0;
             desabilitar();
         }
-	}
+
+    }
 
     void habilitar()
     {
@@ -61,7 +41,34 @@ public class Dialogo : MonoBehaviour {
 
     void desabilitar()
     {
-            panelBox.SetActive(false);
-        
+
+        panelBox.SetActive(false);
+
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+
+        if (Input.GetKeyDown("z"))
+        {
+            habilitar();
+
+            if (other.gameObject.CompareTag("menina1"))
+            {
+                textoMensagem.text = "Hallo!";
+            }
+
+            else
+            {
+                textoMensagem.text = "Hola!";
+            }
+
+        }
+
+
+
+        //desabilitar();
+
+
     }
 }
