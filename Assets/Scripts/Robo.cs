@@ -6,19 +6,20 @@ using UnityEngine.UI;
 public class Robo : MonoBehaviour {
 
 
-    private int vida;
-    private int velocidade;
-    private int ataque;
-    private int defesa;
+    public int vida;
+    public int inteligencia;
+    public int velocidade;
+    public int ataque;
+    public int defesa;
 
     private int curVida;
     private int curAtaque;
     private int curDefesa;
-    private int curVelocidade;
 
-    public void InicializaStatus (int vid=10, int vel=10, int atk=10, int def=10)
+    public void InicializaStatus(int vid=10, int intel=10, int vel=10, int atk=10, int def=13)
     {
         vida = vid;
+        inteligencia = intel;
         velocidade = vel;
         ataque = atk;
         defesa = def;
@@ -26,77 +27,44 @@ public class Robo : MonoBehaviour {
         curVida = vida;
         curAtaque = ataque;
         curDefesa = defesa;
-        curVelocidade = velocidade;
-    }
-    // Apos a batalha todos os valores de atributos do beta voltam para seu valor original
-    public void RecarregaAtributos () {
-        curVida = vida;
-        curAtaque = ataque;
-        curDefesa = defesa;
-        curVelocidade = velocidade;
     }
 
-    public bool TakeDamage (int damage)
+    public int getAtaque()
     {
-        Random.InitState((int)Time.time);
-        if( Random.Range(0, 50) >= velocidade)
+        return curAtaque;
+    }
+
+    public int TakeDamage(int damage)
+    {
+        Random.InitState(546);
+        if( Random.Range(0, 70) >= velocidade)
         {
             //ACERTOU!
             if (damage > curDefesa)
             {
                 curVida -= (damage - curDefesa);
-                return true;
+                return (damage - curDefesa);
             }
-            
         }
-        return false;
+        return 0;
     }
 
-    public void ReduceVelocity (int reducao)
-    {
-        curVelocidade -= reducao;
-        if (curVelocidade < 3)
-        {
-            curVelocidade = 3;
-        }
-    }
-
-    public void AumentarDefesa (int aumento)
-    {
-        curDefesa += aumento;
-        if (curDefesa > defesa + 3)
-        {
-            curDefesa = defesa + 3;
-        }
-    }
-
-    public int GetAtaque ()
-    {
-        return curAtaque;
-    }
-
-    public bool IsDead ()
+    public bool isDead()
     {
         return (curVida <= 0);
     }
 
-    public int GetCurVida ()
+    public int getCurVida()
     {
         return curVida;
     }
 
-    public int GetMaxVida ()
+    public int getMaxVida()
     {
         return vida;
     }
 
-    public int GetMaxVelocidade ()
-    {
+    public int getVelocidade() {
         return velocidade;
-    }
-
-    public int GetCurVelocidade ()
-    {
-        return curVelocidade;
     }
 }
