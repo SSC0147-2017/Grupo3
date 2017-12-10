@@ -40,12 +40,12 @@ public class Player : Robo {
         // Snapdragon powerup
         effectList = new List<PowerUpEffect>();
         penaltyList = new List<PowerUpEffect>();
-        effect = new PowerUpEffect(PowerUpType.Inteligencia, 5);
+        effect = new PowerUpEffect(PowerUpType.Ataque, 5);
         effectList.Add(effect);
         effect = new PowerUpEffect(PowerUpType.Ataque, 2);
         effectList.Add(effect);
 
-        newPowerUp = new PowerUp("Processador Snapdragon", PowerUpType.Inteligencia, effectList, penaltyList);
+        newPowerUp = new PowerUp("Processador Snapdragon", PowerUpType.Ataque, effectList, penaltyList);
         powerUps.Add(newPowerUp);
         // --------------> DEBUG
     }

@@ -7,7 +7,7 @@ using PowerUpEffect = System.Collections.Generic.KeyValuePair<PowerUpType, int>;
 public enum PowerUpType {
 	Ataque,
 	Defesa,
-	Inteligencia,
+	//Inteligencia,
 	Vida,
 	Velocidade
 }
@@ -38,9 +38,7 @@ public class PowerUp {
         // Carrega os sprites referentes aos icones dos pwoer ups
         string imagePath = "";
         switch (type) {
-            case PowerUpType.Inteligencia:
-                imagePath = "Images/PowerUps/inteligencia";
-                break;
+
             case PowerUpType.Vida:
                 imagePath = "Images/PowerUps/vida";
                 break;

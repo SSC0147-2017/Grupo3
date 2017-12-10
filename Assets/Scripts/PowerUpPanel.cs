@@ -7,7 +7,7 @@ using PowerUpEffect = System.Collections.Generic.KeyValuePair<PowerUpType, int>;
 public class PowerUpPanel : MonoBehaviour {
 
     public GameObject menuItemPrefab;
-    public Player player;
+    public Player player = GameObject.Find("Beta").GetComponent<Player>();
 
     // Slot de power up que chamou o painel e seu respectivo tipo
     public GameObject slotIcon;
