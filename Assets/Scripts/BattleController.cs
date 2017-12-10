@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class BattleController : Utilities
 {
-
     public GameObject enemyGO; //   GameObject do inimigo do jogador
     private GameObject betaGO;  //  GameObject do robo do jogador, o Beta
     public GameObject screen; //    Imagem preta que cobre a tela, por padrao ela esta com alpha 0,
@@ -16,13 +15,20 @@ public class BattleController : Utilities
     public Text enemyVidaText;  //Texto na cena com a vida do inimigo
     public Text battleEvents;   //Texto que descreve as açoes realizadas durante o combate
 
-    public Button ataqueBasicoButton;   //Botao do primeiro ataque do beta
-    public Button ataqueSecundarioButton;   //Botao do segundo ataque do beta
-    public Button ataqueTerciarioButton;    //Botao do terceiro ataque do beta
+    //public Button ataqueBasicoButton;   //Botao do primeiro ataque do beta
+    //public Button ataqueSecundarioButton;   //Botao do segundo ataque do beta
+    //public Button ataqueTerciarioButton;    //Botao do terceiro ataque do beta
+
+    public Image ataque0_select;
+    public Image ataque1_select;
+    public Image ataque2_select;
+
 
     private Enemy enemy;    //Instancia do inimigo
     private Player beta;    //Instancia do beta
 
+
+    private int ataqueSelecionado;
     private bool acertou;   //Esta variavel vai armazenar se o Beta acertou, ou não, o golpe.
                             //  Serve para decidir qual texto apresentar no "battleEvents".
 
@@ -45,6 +51,12 @@ public class BattleController : Utilities
         enemy = enemyGO.GetComponent<Enemy>();
         betaGO = GameObject.Find("Beta");
         beta = betaGO.GetComponent<Player>();
+
+        ataqueSelecionado = 0;
+        ataque0_select.enabled = true;
+        ataque1_select.enabled = false;
+        ataque2_select.enabled = false;
+
         enemyVidaText.text = enemy.GetMaxVida() + " / " + enemy.GetMaxVida(); //   Inicializa textos da cena que mostram a vida atual tanto do beta quanto do inimigo
         betaVidaText.text = beta.GetMaxVida() + " / " + beta.GetMaxVida();
         battleEvents.text = "";
@@ -71,23 +83,46 @@ public class BattleController : Utilities
 
             break;
             case TURNOS.PLAYER_TURN:
-                if (pressedButton)
+                Debug.Log(ataqueSelecionado);
+                switch (ataqueSelecionado)
                 {
-                    ataqueBasicoButton.onClick.AddListener(AtaqueBasicoOnButtonClick);
-                    ataqueSecundarioButton.onClick.AddListener(AtaqueSecundarioOnButtonClick);
-                    ataqueTerciarioButton.onClick.AddListener(AtaqueTerciarioOnButtonClick);
-                    pressedButton = false;
-                    turnoAtual = TURNOS.ENEMY_TURN;
-                    if (enemy.IsDead())
-                    {
-                        turnoAtual = TURNOS.WIN;
-                        enemyVidaText.text = "0 / " + enemy.GetMaxVida();
-                    }
-                    else
-                    {
-                        enemyVidaText.text = enemy.GetCurVida() + " / " + enemy.GetMaxVida();
-                    }
+                    case 0:
+                        ataqueSelecionado = NavegaAtaques(0);
+                        if (Input.GetKeyDown(KeyCode.Z))
+                        {
+                            Ataque0Selected();
+                            turnoAtual = TURNOS.ENEMY_TURN;
+                        }
+                    break;
+                    case 1:
+                        ataqueSelecionado = NavegaAtaques(1);
+                        if (Input.GetKeyDown(KeyCode.Z))
+                        {
+                            Ataque1Selected();
+                            turnoAtual = TURNOS.ENEMY_TURN;
+                        }
+                    break;
+                    case 2:
+                        ataqueSelecionado = NavegaAtaques(2);
+                        if (Input.GetKeyDown(KeyCode.Z))
+                        {
+                            Ataque2Selected();
+                            turnoAtual = TURNOS.ENEMY_TURN;
+                        }
+                    break;
+
                 }
+                if (enemy.IsDead())
+                {
+                    turnoAtual = TURNOS.WIN;
+                    enemyVidaText.text = "0 / " + enemy.GetMaxVida();
+                }
+                else
+                {
+                    enemyVidaText.text = enemy.GetCurVida() + " / " + enemy.GetMaxVida();
+                }
+
+
             break;
             case TURNOS.ENEMY_TURN:
                 battleEvents.text = "O inimigo atacou!";
@@ -122,21 +157,24 @@ public class BattleController : Utilities
         }
     }
 
-    private void AtaqueBasicoOnButtonClick ()
+    private void Ataque0Selected ()
     {
+        Debug.Log("atacou com 0");
         battleEvents.text = "Beta usou ataque basico!";
         acertou = enemy.TakeDamage(Random.Range(0,5) + beta.GetAtaque());
         ChecaAcerto(acertou);
     }
 
-    private void AtaqueSecundarioOnButtonClick ()
+    private void Ataque1Selected ()
     {
+        Debug.Log("atacou com 1");
         enemy.ReduceVelocity(1);
         battleEvents.text = "A velocidade do inimigo foi reduzida!";
     }
 
-    private void AtaqueTerciarioOnButtonClick ()
+    private void Ataque2Selected ()
     {
+        Debug.Log("atacou com 2");
         beta.AumentarDefesa(1);
         battleEvents.text = "Beta aumentou a propria defesa!";
     }
@@ -153,10 +191,45 @@ public class BattleController : Utilities
         }
     }
 
-    public void PressButton()
+
+    public int NavegaAtaques (int ataqueAtual)
     {
-        pressedButton = true;
+        if (ataqueAtual == 0)
+        {
+            ataque0_select.enabled = true;
+            ataque1_select.enabled = false;
+            ataque2_select.enabled = false;
+        }
+        else if (ataqueAtual == 1)
+        {
+            ataque0_select.enabled = false;
+            ataque1_select.enabled = true;
+            ataque2_select.enabled = false;
+        }
+        else if (ataqueAtual == 2)
+        {
+            ataque0_select.enabled = false;
+            ataque1_select.enabled = false;
+            ataque2_select.enabled = true;
+        }
+
+        int proximo;
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            proximo = ataqueAtual - 1;
+            if (proximo == -1)
+                proximo = 2;
+            return proximo;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            proximo = ataqueAtual + 1;
+            if (proximo == 3)
+                proximo = 0;
+            return proximo;
+        }
+        return ataqueAtual;
+
     }
-
-
 }
