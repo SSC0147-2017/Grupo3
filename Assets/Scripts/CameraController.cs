@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
 	public GameObject followTarget;
-	
+
 	//private Vector3 offset;
 	public Vector3 minCameraPos;
 	public Vector3 maxCameraPos;
@@ -37,9 +37,7 @@ public class CameraController : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-		//offset = transform.position - followTarget.transform.position;
-	}
+
 	
 	// Update is called once per frame
 	void Update () {
