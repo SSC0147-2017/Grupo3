@@ -14,6 +14,7 @@ public class PlayerController : Utilities
     private bool pausado = false;
     private bool controle = false;
     public float altura;
+    public string CenaACarregar;
 
     public GameObject screen;
 
@@ -58,11 +59,17 @@ public class PlayerController : Utilities
                 transform.position.x < 23 &&
                 transform.position.y > -49.4 &&
                 transform.position.y < -39)
+            {
+                GetComponent<SalvaPosicaoPlayer>().SalvarLocalizacao();
+                SceneManager.LoadScene(CenaACarregar);
                 StartCoroutine(FadeIn(screen, "Customization"));
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
+            GetComponent<SalvaPosicaoPlayer>().SalvarLocalizacao();
+            SceneManager.LoadScene(CenaACarregar);
             StartCoroutine(FadeIn(screen, "BattleScene"));
         }
 
