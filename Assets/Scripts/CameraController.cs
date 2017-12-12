@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour {
 
 		transform.position = new Vector3(posX, posY, transform.position.z);
 
-		if (followTarget.transform.position.x > 96 && followTarget.transform.position.y < -30) {
+		if (followTarget.transform.position.x > 85 && followTarget.transform.position.y < -30) {
 			minCameraPos = new Vector3(0f, -65.6f, transform.position.z);
 			maxCameraPos = new Vector3(107f, 65.6f, transform.position.z);
 		}
