@@ -55,7 +55,7 @@ public class Dialogo : MonoBehaviour
 
             if (other.gameObject.CompareTag("menina1"))
             {
-                textoMensagem.text = "Hallo!";
+                textoMensagem.text = "Hallo!aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n";
             }
 
             else
