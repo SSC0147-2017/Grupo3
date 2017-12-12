@@ -2,7 +2,7 @@
 <doc>
   <members>
     <assembly>
-      <name>UnityEditor.Analytics</name>
+      <name>UnityEditor.UIAutomation</name>
     </assembly>
   </members>
 </doc>
