@@ -59,6 +59,7 @@ public class BattleController : Utilities
 
         enemyVidaText.text = enemy.GetMaxVida() + " / " + enemy.GetMaxVida(); //   Inicializa textos da cena que mostram a vida atual tanto do beta quanto do inimigo
         betaVidaText.text = beta.GetMaxVida() + " / " + beta.GetMaxVida();
+        Debug.Log(beta.GetMaxVida());
         battleEvents.text = "Teste";
         pressedButton = false;
         Random.InitState((int)Time.time);   //gera semente para valores randomicos

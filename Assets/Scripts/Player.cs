@@ -35,17 +35,61 @@ public class Player : Robo {
         penaltyList.Add(penalty);
 
         PowerUp newPowerUp = new PowerUp("Bateria de lítio", PowerUpType.Vida, effectList, penaltyList);
+        newPowerUp.Icon = Resources.Load<Sprite>("Sprites/battery");
 		powerUps.Add(newPowerUp);
 
         // Snapdragon powerup
         effectList = new List<PowerUpEffect>();
         penaltyList = new List<PowerUpEffect>();
-        effect = new PowerUpEffect(PowerUpType.Ataque, 5);
+        effect = new PowerUpEffect(PowerUpType.Inteligencia, 5);
         effectList.Add(effect);
-        effect = new PowerUpEffect(PowerUpType.Ataque, 2);
+        effect = new PowerUpEffect(PowerUpType.Velocidade, 1);
         effectList.Add(effect);
 
-        newPowerUp = new PowerUp("Processador Snapdragon", PowerUpType.Ataque, effectList, penaltyList);
+        newPowerUp = new PowerUp("Processador Snapdragon", PowerUpType.Inteligencia, effectList, penaltyList);
+        newPowerUp.Icon = Resources.Load<Sprite>("Sprites/motherBoard");
+        powerUps.Add(newPowerUp);
+
+        // Hammer powerup
+        effectList = new List<PowerUpEffect>();
+        penaltyList = new List<PowerUpEffect>();
+        effect = new PowerUpEffect(PowerUpType.Ataque, 5);
+        effectList.Add(effect);
+        newPowerUp = new PowerUp("Martelo", PowerUpType.Ataque, effectList, penaltyList);
+        newPowerUp.Icon = Resources.Load<Sprite>("Sprites/hammer");
+        powerUps.Add(newPowerUp);
+
+        // Flashlight powerup
+        effectList = new List<PowerUpEffect>();
+        penaltyList = new List<PowerUpEffect>();
+        effect = new PowerUpEffect(PowerUpType.Ataque, 1);
+        effectList.Add(effect);
+        newPowerUp = new PowerUp("Lanterna", PowerUpType.Ataque, effectList, penaltyList);
+        newPowerUp.Icon = Resources.Load<Sprite>("Sprites/lanterna");
+        powerUps.Add(newPowerUp);
+
+        // Oil can powerup
+        effectList = new List<PowerUpEffect>();
+        penaltyList = new List<PowerUpEffect>();
+        effect = new PowerUpEffect(PowerUpType.Velocidade, 3);
+        effectList.Add(effect);
+        penalty = new PowerUpEffect(PowerUpType.Vida, 2);
+        penaltyList.Add(penalty);
+        newPowerUp = new PowerUp("Lata de óleo", PowerUpType.Velocidade, effectList, penaltyList);
+        newPowerUp.Icon = Resources.Load<Sprite>("Sprites/oilCan");
+        powerUps.Add(newPowerUp);
+
+        // Gas powerup
+        effectList = new List<PowerUpEffect>();
+        penaltyList = new List<PowerUpEffect>();
+        effect = new PowerUpEffect(PowerUpType.Vida, 1);
+        effectList.Add(effect);
+        effect = new PowerUpEffect(PowerUpType.Velocidade, 2);
+        effectList.Add(effect);
+        penalty = new PowerUpEffect(PowerUpType.Inteligencia, 1);
+        penaltyList.Add(penalty);
+        newPowerUp = new PowerUp("Gasolina", PowerUpType.Vida, effectList, penaltyList);
+        newPowerUp.Icon = Resources.Load<Sprite>("Sprites/gasoline");
         powerUps.Add(newPowerUp);
         // --------------> DEBUG
     }

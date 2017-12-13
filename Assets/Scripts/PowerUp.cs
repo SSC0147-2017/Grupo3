@@ -37,16 +37,20 @@ public class PowerUp {
 
         // Carrega os sprites referentes aos icones dos pwoer ups
         string imagePath = "";
-        switch (type) {
+        /*switch (type) {
             case PowerUpType.Inteligencia:
-                imagePath = "Images/PowerUps/inteligencia";
+                imagePath = "Sprites/motherBoard";
                 break;
             case PowerUpType.Vida:
-                imagePath = "Images/PowerUps/vida";
+                imagePath = "Sprites/battery";
                 break;
+            case PowerUpType.Ataque:
+                imagePath = "Sprites/hammer";
+                break;
+            case PowerUpType.
         }
 
-        icon = Resources.Load<Sprite>(imagePath);
+        icon = Resources.Load<Sprite>(imagePath);*/
     }
 
 	public string Name {
@@ -76,6 +80,9 @@ public class PowerUp {
     public Sprite Icon {
         get {
             return icon;
+        }
+        set {
+            icon = value;
         }
     }
 }
