@@ -3,13 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PowerUpEffect = System.Collections.Generic.KeyValuePair<PowerUpType, int>;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour {
+public class Player : Robo {
 	List<PowerUp> powerUps;
 
-	void Start () {
+    private void Awake()
+    {
+		InicializaStatus(10, 10, 10, 10);
+
+        DontDestroyOnLoad(this);
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+
+    void Start () {
 		powerUps = new List<PowerUp>();
-		
+
         // DEBUG -------------->
         // Powerup bateria de lítio
 		PowerUpEffect effect = new PowerUpEffect(PowerUpType.Vida, 3);
@@ -27,15 +40,16 @@ public class Player : MonoBehaviour {
         // Snapdragon powerup
         effectList = new List<PowerUpEffect>();
         penaltyList = new List<PowerUpEffect>();
-        effect = new PowerUpEffect(PowerUpType.Inteligencia, 5);
+        effect = new PowerUpEffect(PowerUpType.Ataque, 5);
         effectList.Add(effect);
         effect = new PowerUpEffect(PowerUpType.Ataque, 2);
         effectList.Add(effect);
 
-        newPowerUp = new PowerUp("Processador Snapdragon", PowerUpType.Inteligencia, effectList, penaltyList);
+        newPowerUp = new PowerUp("Processador Snapdragon", PowerUpType.Ataque, effectList, penaltyList);
         powerUps.Add(newPowerUp);
         // --------------> DEBUG
     }
+
 
     /* Retorna a quantidade de power ups que o player tem */
     public int PowerUpCount {
